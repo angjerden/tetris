@@ -98,7 +98,7 @@ public class Board extends JPanel implements ActionListener {
         Dimension size = getSize();
         int boardTop = (int) size.getHeight() - boardHeight * squareHeight();
 
-        for (int i = 0; i < boardHeight; i++) {
+        for (int i = 0; i < boardHeight; ++i) {
             for (int j = 0; j < boardWidth; ++j) {
                 Tetrominoes shape = shapeAt(j, boardHeight - i - 1);
                 if (shape != Tetrominoes.NoShape) {
@@ -111,7 +111,7 @@ public class Board extends JPanel implements ActionListener {
         if (curPiece.getShape() != Tetrominoes.NoShape) {
             for (int i = 0; i < 4; ++i) {
                 int x = curX + curPiece.getX(i);
-                int y = curY + curPiece.getY(i);
+                int y = curY - curPiece.getY(i);
                 drawSquare(g, 0 + x * squareWidth(),
                         boardTop + (boardHeight - y - 1) * squareHeight(),
                         curPiece.getShape());
@@ -159,7 +159,7 @@ public class Board extends JPanel implements ActionListener {
     private void newPiece() {
         curPiece.setRandomShape();
         curX = boardWidth / 2 + 1;
-        curY = boardWidth - 1 + curPiece.minY();
+        curY = boardHeight - 1 + curPiece.minY();
 
         if (!tryMove(curPiece, curX, curY)) {
             curPiece.setShape(Tetrominoes.NoShape);
